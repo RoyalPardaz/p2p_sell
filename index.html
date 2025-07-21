@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2P Sell - ارائه دهنده خدمات اینترنت پرسرعت</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IRANSans', 'Tahoma', sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(30, 60, 114, 0.8), rgba(42, 82, 152, 0.8)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23e6f2ff" width="1200" height="600"/><g fill="%23b3d9ff" opacity="0.3"><circle cx="200" cy="150" r="80"/><circle cx="800" cy="300" r="120"/><circle cx="1000" cy="100" r="60"/></g></svg>');
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .services-section {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 50px;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e9ecef;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .service-card p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        /* Action Buttons */
+        .action-section {
+            background: #f8f9fa;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+        }
+
+        .btn-secondary {
+            background: #28a745;
+        }
+
+        .btn-secondary:hover {
+            background: #218838;
+            box-shadow: 0 5px 15px rgba(40,167,69,0.3);
+        }
+
+        /* Modal/Popup Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            position: relative;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6c757d;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* DNS Info Styles */
+        .dns-info {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: right;
+            color: #0066cc;
+            font-weight: 500;
+        }
+
+        .dns-info h4 {
+            margin-bottom: 10px;
+            color: #004499;
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            color: #007bff;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #007bff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .dns-item {
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Plans Section */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .plan-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            border-color: #007bff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,123,255,0.15);
+        }
+
+        .plan-card.popular {
+            border-color: #ffc107;
+            position: relative;
+        }
+
+        .plan-card.popular::before {
+            content: "محبوب";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: #ffc107;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .plan-speed {
+            color: #007bff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .plan-features li {
+            padding: 5px 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 10% 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">P2P Sell</div>
+            <ul class="nav-links">
+                <li><a href="#home">خانه</a></li>
+                <li><a href="#services">خدمات</a></li>
+                <li><a href="#plans">تعرفه‌ها</a></li>
+                <li><a href="#contact">تماس با ما</a></li>
+                <li><a href="#support">پشتیبانی</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>اینترنت پرسرعت و پایدار</h1>
+            <p>ارائه دهنده خدمات اینترنت اختصاصی Point-to-Point با کیفیت بالا و پشتیبانی 24 ساعته</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">چرا P2P Sell را انتخاب کنیم؟</h2>
+            <div class="service-cards">
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>سرعت بالا</h3>
+                    <p>اینترنت پرسرعت با کمترین تاخیر و بیشترین پایداری برای تمام نیازهای شما</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>امنیت بالا</h3>
+                    <p>اتصال مستقیم و ایمن بدون محدودیت با حفظ حریم شخصی کاربران</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💬</div>
+                    <h3>پشتیبانی 24/7</h3>
+                    <p>پشتیبانی فنی حرفه‌ای در تمام ساعات شبانه روز برای رفع مشکلات شما</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Section -->
+    <section class="action-section">
+        <div class="container">
+            <h2>مدیریت حساب کاربری</h2>
+            <p>برای بررسی وضعیت اشتراک یا خرید سرویس جدید، از دکمه‌های زیر استفاده کنید</p>
+            <div class="button-group">
+                <button class="btn" onclick="openSubscriptionCheck()">بررسی اشتراک</button>
+                <button class="btn btn-secondary" onclick="openPurchaseMenu()">خرید اشتراک جدید</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p><strong>P2P Sell</strong> - ارائه دهنده خدمات اینترنت اختصاصی</p>
+            <p>تلفن پشتیبانی: 021-88776655 | ایمیل: support@p2psell.ir</p>
+            <div class="social-links">
+                <a href="#">📘</a>
+                <a href="#">📷</a>
+                <a href="#">🐦</a>
+                <a href="#">📞</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Subscription Check Modal -->
+    <div id="subscriptionModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('subscriptionModal')">&times;</button>
+            <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">بررسی وضعیت اشتراک</h3>
+            <div class="form-group">
+                <label for="serviceCode">کد سرویس:</label>
+                <input type="text" id="serviceCode" placeholder="کد 4 رقمی سرویس خود را وارد کنید" maxlength="4">
+            </div>
+            <button class="btn" onclick="checkSubscription()" style="width: 100%;">بررسی اشتراک</button>
+            <div id="subscriptionResult"></div>
+        </div>
+    </div>
+
+    <!-- Purchase Modal -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content" style="max-width: 800px; max-height: 85vh; overflow-y: auto;">
+            <button class="close-btn" onclick="closeModal('purchaseModal')">&times;</button>
+            <h3 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">انتخاب پلن اشتراک</h3>
+            <div class="plans-grid">
+                <div class="plan-card" onclick="selectPlan('bronze')">
+                    <div class="plan-name">پلن برنزی</div>
+                    <div class="plan-speed">25 مگابیت</div>
+                    <div class="plan-price">180,000 تومان</div>
+                    <ul class="plan-features">
+                        <li>✓ اتصال پایدار</li>
+                        <li>✓ پشتیبانی روزانه</li>
+                        <li>✓ بدون محدودیت حجم</li>
+                    </ul>
+                </div>
+                
+                <div class="plan-card popular" onclick="selectPlan('silver')">
+                    <div class="plan-name">پلن نقره‌ای</div>
+                    <div class="plan-speed">50 مگابیت</div>
+                    <div class="plan-price">320,000 تومان</div>
+                    <ul class="plan-features">
+                        <li>✓ سرعت دوبرابر</li>
+                        <li>✓ پشتیبانی اولویت‌دار</li>
+                        <li>✓ IP اختصاصی</li>
+                    </ul>
+                </div>
+                
+                <div class="plan-card" onclick="selectPlan('gold')">
+                    <div class="plan-name">پلن طلایی</div>
+                    <div class="plan-speed">100 مگابیت</div>
+                    <div class="plan-price">580,000 تومان</div>
+                    <ul class="plan-features">
+                        <li>✓ حداکثر سرعت</li>
+                        <li>✓ پشتیبانی VIP</li>
+                        <li>✓ تنظیمات پیشرفته</li>
+                    </ul>
+                </div>
+                
+                <div class="plan-card" onclick="selectPlan('enterprise')">
+                    <div class="plan-name">پلن سازمانی</div>
+                    <div class="plan-speed">نامحدود</div>
+                    <div class="plan-price">950,000 تومان</div>
+                    <ul class="plan-features">
+                        <li>✓ سرعت نامحدود</li>
+                        <li>✓ مدیریت اختصاصی</li>
+                        <li>✓ SLA تضمین شده</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="purchaseResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function openSubscriptionCheck() {
+            document.getElementById('subscriptionModal').style.display = 'block';
+            document.getElementById('serviceCode').focus();
+        }
+
+        function openPurchaseMenu() {
+            document.getElementById('purchaseModal').style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            // Clear results
+            const result1 = document.getElementById('subscriptionResult');
+            const result2 = document.getElementById('purchaseResult');
+            if (result1) result1.innerHTML = '';
+            if (result2) result2.innerHTML = '';
+        }
+
+        function checkSubscription() {
+            const code = document.getElementById('serviceCode').value.trim();
+            const resultDiv = document.getElementById('subscriptionResult');
+            
+            if (code === '') {
+                resultDiv.innerHTML = '<div class="alert alert-error">لطفاً کد سرویس را وارد کنید</div>';
+                return;
+            }
+            
+            if (code === '9035') {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        ✅ اشتراک اینترنت پوینت تو پوینت اختصاصی فعال می‌باشد<br>
+                        <strong>وضعیت:</strong> فعال | <strong>اتصال:</strong> پایدار<br>
+                        <strong>سرعت فعلی:</strong> 50 مگابیت
+                    </div>
+                    <div class="dns-info">
+                        <h4>🌐 برای فعال‌سازی این DNS ها را تنظیم کنید:</h4>
+                        <div class="dns-item"><strong>DNS اولیه:</strong> 1.1.1.1</div>
+                        <div class="dns-item"><strong>DNS ثانویه:</strong> 1.0.0.1</div>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = '<div class="alert alert-error">❌ همچین اکانتی در سیستم وجود ندارد<br>در صورت اطمینان از صحت کد، با پشتیبانی تماس بگیرید</div>';
+            }
+        }
+
+        function selectPlan(planType) {
+            const plans = {
+                'bronze': { name: 'پلن برنزی', price: '180,000 تومان', speed: '25 مگابیت' },
+                'silver': { name: 'پلن نقره‌ای', price: '320,000 تومان', speed: '50 مگابیت' },
+                'gold': { name: 'پلن طلایی', price: '580,000 تومان', speed: '100 مگابیت' },
+                'enterprise': { name: 'پلن سازمانی', price: '950,000 تومان', speed: 'نامحدود' }
+            };
+            
+            const plan = plans[planType];
+            const resultDiv = document.getElementById('purchaseResult');
+            
+            resultDiv.innerHTML = `
+                <div class="alert alert-success" style="margin-top: 20px;">
+                    <h4>✅ ${plan.name} انتخاب شد</h4>
+                    <p><strong>سرعت:</strong> ${plan.speed} | <strong>قیمت:</strong> ${plan.price}</p>
+                    <button class="btn" onclick="proceedToPayment('${planType}')" style="width: 100%; margin-top: 15px;">
+                        💳 پرداخت هزینه
+                    </button>
+                </div>
+            `;
+            
+            // Scroll to the result
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function proceedToPayment(planType) {
+            const resultDiv = document.getElementById('purchaseResult');
+            
+            // Show loading message
+            resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال جستجو...</div>';
+            
+            // Simulate delay for processing
+            setTimeout(() => {
+                // Show error message due to high traffic
+                resultDiv.innerHTML = `
+                    <div class="alert alert-error" style="margin-top: 20px;">
+                        ❌ <strong>خطا در اتصال به درگاه پرداخت</strong><br>
+                        به دلیل ترافیک زیاد سرور، امکان پرداخت در حال حاضر فراهم نیست.<br>
+                        لطفاً چند دقیقه دیگر مجدداً تلاش کنید.
+                        <br><br>
+                        <button class="btn" onclick="proceedToPayment('${planType}')" style="width: 100%; margin-top: 10px;">
+                            🔄 تلاش مجدد
+                        </button>
+                    </div>
+                `;
+                
+                // Scroll to the result
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 3000); // 3 second delay
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Enter key support for subscription check
+        document.getElementById('serviceCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkSubscription();
+            }
+        });
+    </script>
+</body>
+</html>
